@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 from .forms import PostForm
 from .models import Post
+from django.shortcuts import redirect
 # Create your views here.
 
 def post_list(request):
@@ -28,7 +29,7 @@ def post_new(request):
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
+        form = PostForm(instance=post)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
